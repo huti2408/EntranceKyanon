@@ -1,0 +1,31 @@
+{
+  "name": "entrancekyanon",
+  "version": "1.0.0",
+  "description": "Entrance Test - Todo API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thayphaphuti/EntranceKyanon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thayphaphuti/EntranceKyanon/issues"
+  },
+  "homepage": "https://github.com/thayphaphuti/EntranceKyanon#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "env": "0.0.2",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
+    "typeorm": "^0.2.41"
+  }
+}
