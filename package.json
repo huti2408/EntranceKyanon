@@ -8,6 +8,7 @@
     "server": "nodemon index",
     "start": "nodemon index.js"
   },
+  "type":"module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thayphaphuti/EntranceKyanon.git"
@@ -20,7 +21,7 @@
   "homepage": "https://github.com/thayphaphuti/EntranceKyanon#readme",
   "dependencies": {
     "body-parser": "^1.19.1",
-    "env": "0.0.2",
+    "cors": "^2.8.5",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
