@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
-import {User} from "./User"
+import User from "./User"
 
 @Entity()
 export class Todo {
@@ -21,7 +21,7 @@ export class Todo {
     @Column({type:"enum",enum:{new :"NEW",complete : "COMPLETE"},default:"NEW"})
     status: boolean;
 
-    @Column("date")
+    @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
     dateOfCreation: string;
     
     @Column("date")

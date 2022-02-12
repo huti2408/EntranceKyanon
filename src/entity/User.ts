@@ -4,7 +4,7 @@ import { Todo } from "./Todo";
 
 
 @Entity()
-export class User {
+export default class User {
 
     @PrimaryGeneratedColumn()
     id: number;
