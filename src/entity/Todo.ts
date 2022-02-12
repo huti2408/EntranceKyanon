@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
 import User from "./User"
 
 @Entity()
-export class Todo {
+export default class Todo {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -15,7 +15,7 @@ export class Todo {
     @Column()
     useId: number;
 
-    @Column("date")
+    @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
     dateOfCompletion: string;
     
     @Column({type:"enum",enum:{new :"NEW",complete : "COMPLETE"},default:"NEW"})
@@ -24,7 +24,7 @@ export class Todo {
     @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
     dateOfCreation: string;
     
-    @Column("date")
+    @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
     dateOfModification: string;
 
     @ManyToOne(type=>User, user => user.todos) 

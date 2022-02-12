@@ -1,6 +1,4 @@
-import UserEnity from "../entity/User"
 import {Request, Response} from "express";
-import lodash from "lodash";
 import jwt from "jsonwebtoken"
 import md5 from "md5"
 import { getManager, getRepository } from "typeorm";
@@ -21,7 +19,7 @@ export default class UserController{
     }
     public static async SignUp(req: Request, res: Response){
         const userRepo = getRepository(User)
-        const {password,username} = req.body
+        const {password,username,firstName,lastName,age} = req.body
         const existedUser = await userRepo.findOne({username})
         if(existedUser){
             res.status(400).json({message:"Username already taken"})
@@ -29,10 +27,12 @@ export default class UserController{
         else{
             try{
                 const hashPass = md5(password)
-                const newUser =  await userRepo.create({
+                const newUser =  userRepo.create({
                     username,
-                    password:hashPass,
-                    ...req.body
+                    password: hashPass,
+                    firstName,
+                    lastName,
+                    age
                 })
                 await userRepo.save(newUser)
                 res.status(201).json("Sign Up Successfully!")
@@ -52,18 +52,22 @@ export default class UserController{
                 res.status(400).json("Bad Request")
             }
             const user = await userRepo.findOne({username})
-            if (!user || user.password !== password){
+            console.log(user)
+            if (!user || user.password !== md5(password)){
                 res.status(400).json("Username or password is not correct!")
             }
             else{
                 if(user.password === md5(password)){
                     const userid = user.id;
-                    const token = await jwt.sign({
-                            id:userid,name:user.lastName
-                        },process.env.KEY_JWT || "ABC",
-                        {expiresIn:60*60*4}
-                        )
+                    const token = jwt.sign({
+                        id: userid, name: user.lastName
+                    }, process.env.KEY_JWT || "ABC",
+                        { expiresIn: 60 * 60 * 4 }
+                    )
                     res.status(200).json({token,userid})
+                }
+                else{
+                    res.status(400).json("Username or password is not correct!")
                 }
             }
         }

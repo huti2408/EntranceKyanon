@@ -1,6 +1,6 @@
 import { OneToMany } from "typeorm";
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-import { Todo } from "./Todo";
+import  Todo  from "./Todo";
 
 
 @Entity()
