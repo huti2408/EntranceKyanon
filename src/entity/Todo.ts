@@ -9,22 +9,22 @@ export default class Todo {
     @Column()
     name: string;
 
-    @Column()
+    @Column({nullable:true})
     description: string;
 
-    @Column()
-    useId: number;
+    @Column({nullable:true})
+    userId: number;
 
-    @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
+    @Column({type:"date"})
     dateOfCompletion: string;
     
     @Column({type:"enum",enum:{new :"NEW",complete : "COMPLETE"},default:"NEW"})
     status: boolean;
 
-    @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
+    @Column({type:"date", default:new Date().toISOString().slice(0,10).replace('T', ' ')})
     dateOfCreation: string;
     
-    @Column({type:"timestamp", default:() => "CURRENT_TIMESTAMP"})
+    @Column({type:"date",nullable:true})
     dateOfModification: string;
 
     @ManyToOne(type=>User, user => user.todos) 

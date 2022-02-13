@@ -38,6 +38,7 @@ export default class TodoController {
         const todoRepo = getRepository(Todo)
         try{
             const todo = await todoRepo.findOne(req.params.id)
+            todo.dateOfModification = new Date().toISOString().slice(0,10).replace('T', ' ')
             todoRepo.merge(todo,req.body)
             await todoRepo.save(todo)
             res.status(201).json("Update Successfully!")
@@ -94,7 +95,7 @@ export default class TodoController {
         try{
             const {id} = req.params
             const todos = await todoRepo.find()
-            const todosByUser = todos.filter(todo => todo.useId.toString() === id)
+            const todosByUser = todos.filter(todo => todo.userId.toString() === id)
             res.status(201).json(todosByUser)
         }
         catch(err){
