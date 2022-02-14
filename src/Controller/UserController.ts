@@ -52,7 +52,6 @@ export default class UserController{
                 res.status(400).json("Bad Request")
             }
             const user = await userRepo.findOne({username})
-            console.log(user)
             if (!user || user.password !== md5(password)){
                 res.status(400).json("Username or password is not correct!")
             }

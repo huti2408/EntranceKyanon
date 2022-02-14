@@ -10,6 +10,6 @@ router.get("/todobyuser/:id",TodoController.GetTodosByUser)
 router.post("/",TodoController.AddTodo)
 router.put("/:id",TodoController.UpdateTodo)
 router.delete("/:id",TodoController.DeleteTodo)
-router.post("/assign",TodoController.AssignTodo)
+router.post("/assign/:id",TodoController.AssignTodo)
 
 export default router

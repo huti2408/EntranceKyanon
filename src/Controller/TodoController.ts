@@ -75,13 +75,23 @@ export default class TodoController {
         try{
             const idTodo = req.params.id
             const head = req.headers["authorization"]
+            const {userId} = req.body
             if(head){
                 const token = head.split(" ")[1] || "";
             if (!token) return res.status(401).send({message: "Invalid token"})
             else{
                 const decode = jwt.decode(token) as DecodeType
                 const userIdCurrent = decode.id
-                
+                if(userId == userIdCurrent){
+                    res.status(400).json("Cant not assign yourself")
+                }
+                else{
+                    const todo = await todoRepo.findOne(idTodo)
+                    todo.dateOfModification = new Date().toISOString().slice(0,10).replace('T', ' ')
+                    todo.userId = userId
+                    await todoRepo.save(todo)
+                    res.status(201).json("Assign Successfully!")
+                }
             }
             }
         }
@@ -94,9 +104,17 @@ export default class TodoController {
         const todoRepo = getRepository(Todo)
         try{
             const {id} = req.params
-            const todos = await todoRepo.find()
-            const todosByUser = todos.filter(todo => todo.userId.toString() === id)
-            res.status(201).json(todosByUser)
+            const todos = await todoRepo.find()       
+            const todosByUser = todos.filter(todo =>{
+                if(todo.userId)
+                    return todo.userId.toString() == id
+                })
+            if(todosByUser.length > 0){
+                res.status(201).json(todosByUser)  
+            }
+            else {
+                res.status(401).json("This user doesnt have any todo")
+            }
         }
         catch(err){
             console.log(err.message)
